@@ -1,0 +1,28 @@
+extends layout
+
+block content
+  h1 #{title}: #{genre.name}
+  //- p= author.lifespan
+
+  if books.length
+
+    p #[strong Перед удалением этого жанра, удалите следующие книги.]
+
+    div(style='margin-left:20px;margin-top:20px')
+
+      h4 Книги:
+
+      dl
+      each book in books
+        dt
+          a(href=book.url) #{book.title}
+        dd(style='margin-bottom:20px') #{book.summary}
+
+  else
+    p Вы действительно хотите удалить этот жанр?
+
+    form(method='POST' action='')
+      div.form-group
+        input#authorid.form-control(type='hidden',name='genreid', required='true', value=genre._id )
+
+      button.btn.btn-primary(type='submit') Удалить

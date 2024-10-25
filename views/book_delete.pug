@@ -1,0 +1,28 @@
+extends layout
+
+block content
+  h1 #{title}: #{book.name}
+  //- p= author.lifespan
+
+  if bookInstances.length
+
+    p #[strong Перед удалением этой книги, удалите следующие экземпляры книги.]
+
+    div(style='margin-left:20px;margin-top:20px')
+
+      h4 Экземпляры книги:
+
+      dl
+      each bookInstance in bookInstances
+        dt
+          a(href=bookInstance.url) #{book.title}
+        dd #{bookInstance.status}
+
+  else
+    p Вы действительно хотите удалить эту книгу?
+
+    form(method='POST' action='')
+      div.form-group
+        input#authorid.form-control(type='hidden',name='bookid', required='true', value=book._id )
+
+      button.btn.btn-primary(type='submit') Удалить
